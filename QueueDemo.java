@@ -1,79 +1,109 @@
-package DSA;
+package dsa;
 
 class Queue
 {
-    int maxSize;
+    int size;
     int QueueArray[];
-    int front;
-    int rear;
-    int count;
+    int front ,rear;
 
-    Queue(int size)
+    Queue(int capacity)
     {
-        maxSize = size;
-        QueueArray = new int[maxSize];
-        front = 0;
-        rear = -1;
-        count = 0;
+        size=capacity;
+        QueueArray=new int[size];
+        front=-1;
+        rear=-1;
     }
 
-    public void enQueue(int value)
+    public void enqueue(int value)
     {
-        if ( rear == maxSize-1)
-            System.out.println("Queue is full");
-        else
+        if(rear==size-1)
         {
-            rear = (rear + 1)%maxSize;
-            QueueArray[rear] = value;
-            System.out.println(value + " is inserted in queue.");
-            count++;
+            System.out.println("Queue is full.");
+            return;
         }
+        if(front==-1)
+        {
+            front=0;
+        }
+        rear++;
+        QueueArray[rear]=value;
+        System.out.println(value + " Inserted");
     }
 
-    public void deQueue()
+    public void dequeue()
     {
-        if(rear == -1)
-            System.out.println("Queue is Empty");
-        else
+        if(front== -1 || front>rear )
         {
-            System.out.println("\n" + QueueArray[front] + " is Served(removed)");
-            front = (front + 1)%maxSize;
-            count--;
+            System.out.println("Queue is empty");
+            return;
         }
+        System.out.println(QueueArray[front] + " Dequeued");
+        front++;
+    }
+
+    public void peek()
+    {
+        if(front==-1 || front>rear)
+        {
+            System.out.println("Queue is empty");
+            return;
+        }
+        System.out.println("Front element: " + QueueArray[front]);
     }
 
     public void display()
     {
-        if(rear == -1)
-            System.out.println("Queue is Empty");
-        else
+        if(front==-1 || front>rear)
         {
-            System.out.println("Queue Elements are:");
-            for(int i =0; i<count; i++)
-            {
-                int indexx = (front + 1)%maxSize;
-                System.out.print(QueueArray[i] + "\t");
-            }
+            System.out.println("Queue is empty");
+            return;
         }
+
+        System.out.println("Queue Elements: ");
+        for(int i=front; i<=rear; i++)
+        {
+            System.out.print(QueueArray[i] + "\t");
+        }
+        System.out.println();
     }
+
+    public boolean isEmpty()
+    {
+        return (front == -1 || front > rear);
+    }
+
+    public boolean isFull()
+    {
+        return (rear == size - 1);
+    }
+
 }
 
-class QueueDemo
+public class QueueDemo
 {
-    public static void main(String s[])
+    public static void main(String []args)
     {
-        Queue q1 = new Queue(5);
-        q1.enQueue(12);
-        q1.enQueue(234);
-        q1.enQueue(76);
-        q1.enQueue(32);
-        q1.enQueue(98);
-        q1.enQueue(7);
+        Queue q=new Queue(5);
+        q.enqueue(11);
+        q.enqueue(12);
+        q.enqueue(13);
+        q.enqueue(14);
+        q.enqueue(15);
+        q.enqueue(4); // Queue is full
+        q.display();
+        q.peek();
 
-        q1.display();
+        System.out.println("Is Queue Empty? " +q.isEmpty());
+        System.out.println("Is Queue full? " +q.isFull());
 
-        q1.deQueue();
-        q1.deQueue();
-        q1.deQueue();
+        q.display();
+        q.dequeue();
+        q.dequeue();
+        q.display();
+        q.peek();
+
+        System.out.println("Is Queue Empty? " +q.isEmpty());
+        System.out.println("Is Queue full? " +q.isFull());
+
     }
 }
