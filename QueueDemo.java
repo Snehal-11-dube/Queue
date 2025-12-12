@@ -8,22 +8,22 @@ class Queue
 
     Queue(int capacity)
     {
-        size=capacity;
-        QueueArray=new int[size];
-        front=-1;
-        rear=-1;
+        size = capacity;
+        QueueArray = new int[size];
+        front = -1;
+        rear = -1;
     }
 
     public void enqueue(int value)
     {
-        if(rear==size-1)
+        if(rear == size-1)
         {
             System.out.println("Queue is full.");
             return;
         }
-        if(front==-1)
+        if(front == -1)
         {
-            front=0;
+            front = 0;
         }
         rear++;
         QueueArray[rear]=value;
@@ -32,18 +32,25 @@ class Queue
 
     public void dequeue()
     {
-        if(front== -1 || front>rear )
+        if(front == -1 || front>rear )
         {
             System.out.println("Queue is empty");
             return;
         }
         System.out.println(QueueArray[front] + " Dequeued");
         front++;
+
+        // reset when queue becomes empty
+        if (front > rear)
+        {
+            front = -1;
+            rear = -1;
+        }
     }
 
     public void peek()
     {
-        if(front==-1 || front>rear)
+        if(front ==-1 || front>rear)
         {
             System.out.println("Queue is empty");
             return;
@@ -53,7 +60,7 @@ class Queue
 
     public void display()
     {
-        if(front==-1 || front>rear)
+        if(front ==-1 || front>rear)
         {
             System.out.println("Queue is empty");
             return;
@@ -96,7 +103,6 @@ public class QueueDemo
         System.out.println("Is Queue Empty? " +q.isEmpty());
         System.out.println("Is Queue full? " +q.isFull());
 
-        q.display();
         q.dequeue();
         q.dequeue();
         q.display();
